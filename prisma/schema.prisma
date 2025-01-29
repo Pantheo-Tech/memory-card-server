@@ -13,10 +13,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model MemoryCard {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum type_user{
+  admin
+  user
+}
+
+enum type_phone{
+  casa
+  trabalho
+  celular
+}
+
+enum type_address{
+  casa
+  trabalho
+}
+
+enum type_game{
+  playing
+  played
+  whishlist
+}
+
+model tb_user {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  cpf String @unique
+  age Int
+  password String
+  phones tb_phone[]
+  addresses tb_address[]
+  type type_user @default(user)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model tb_phone{
+  id Int @id @default(autoincrement())
+  country_code String
+  area_code String
+  phonee String
+  type type_phone
+  user_id Int
+  user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model tb_address{
+  id Int @id @default(autoincrement())
+  street String
+  number String
+  complement String?
+  neighborhood String
+  city String
+  state String
+  country String
+  type type_address
+  user_id Int
+  user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
