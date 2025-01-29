@@ -53,7 +53,7 @@ model tb_phone{
   id Int @id @default(autoincrement())
   country_code String
   area_code String
-  phonee String
+  phone String
   type type_phone
   user_id Int
   user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
