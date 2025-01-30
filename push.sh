@@ -1,11 +1,7 @@
 #!/bin/bash
 commit_types=("feature" "fix" "doc" "test" "build" "perf" "style" "refactor")
 
-<<<<<<< HEAD
 echo "Digite o tipo de commit que deseja fazer: (feature, fix, doc, test, build, perf, style, refactor)"
-=======
-echo "Digite o tipo de commit que deseja fazer:"
->>>>>>> 65c77508d2fc41b0ec25b2fe0deef65e3f127aba
 read commit_type
 while [ "$commit_type" == "" ]; do
     echo "Digite o tipo de commit que deseja fazer:"
