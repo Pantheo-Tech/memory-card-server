@@ -1,10 +1,18 @@
 #!/bin/bash
-echo "Digite o tipo de commit que deseja fazer:"
+commit_types=("feature" "fix" "doc" "test" "build" "perf" "style" "refactor")
+
+echo "Digite o tipo de commit que deseja fazer: (feature, fix, doc, test, build, perf, style, refactor)"
 read commit_type
 while [ "$commit_type" == "" ]; do
     echo "Digite o tipo de commit que deseja fazer:"
     read commit_type
 done
+
+while [[ ! " ${commit_types[*]} " =~ [[:space:]]${commit_type}[[:space:]] ]]; do
+    echo "Digite um tipo válido de commit:"
+    read commit_type
+done
+
 echo "Digite a mensagem do commit:"
 read commit_message
 
