@@ -1,26 +1,21 @@
 #!/bin/bash
+
 commit_types=("feature" "fix" "doc" "test" "build" "perf" "style" "refactor")
+PS3="Escolha o tipo de commit: "
 
-<<<<<<< HEAD
-echo "Digite o tipo de commit que deseja fazer: (feature, fix, doc, test, build, perf, style, refactor)"
-=======
-echo "Digite o tipo de commit que deseja fazer:"
->>>>>>> 65c77508d2fc41b0ec25b2fe0deef65e3f127aba
-read commit_type
-while [ "$commit_type" == "" ]; do
-    echo "Digite o tipo de commit que deseja fazer:"
-    read commit_type
-done
-
-while [[ ! " ${commit_types[*]} " =~ [[:space:]]${commit_type}[[:space:]] ]]; do
-    echo "Digite um tipo válido de commit:"
-    read commit_type
+echo "Selecione o tipo de commit:"
+select commit_type in "${commit_types[@]}"; do
+    if [[ -n "$commit_type" ]]; then
+        break
+    else
+        echo "Opção inválida, tente novamente."
+    fi
 done
 
 echo "Digite a mensagem do commit:"
 read commit_message
 
-while [ "$commit_message" == "" ]; do
+while [ -z "$commit_message" ]; do
     echo "Digite a mensagem do commit:"
     read commit_message
 done
@@ -29,5 +24,6 @@ current_branch=$(git branch --show-current)
 
 git add . && git commit -m "$commit_type: $commit_message" && git push origin "$current_branch"
 
-echo "Press any key to exit"
-read
+echo "Commit realizado com sucesso!"
+echo "Pressione qualquer tecla para sair..."
+read -n 1 -s
