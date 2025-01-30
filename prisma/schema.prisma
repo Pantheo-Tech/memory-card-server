@@ -30,7 +30,7 @@ enum type_address{
   trabalho
 }
 
-enum type_game{
+enum type_game_status{
   playing
   played
   whishlist
@@ -45,9 +45,14 @@ model tb_user {
   password String
   phones tb_phone[]
   addresses tb_address[]
+  lists tb_list[]
+  played_games tb_played_games[]
+  tips tb_tips[]
   type type_user @default(user)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  deleted_at DateTime?
+
 }
 
 model tb_phone{
@@ -60,6 +65,7 @@ model tb_phone{
   user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  deleted_at DateTime?
 }
 
 model tb_address{
@@ -76,4 +82,53 @@ model tb_address{
   user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  deleted_at DateTime?
+}
+
+model tb_list {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(100) 
+  description String? @db.VarChar(150)
+  game_list tb_game_list[]
+  user_id Int
+  user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  deleted_at DateTime?
+}
+
+model tb_game_list {
+  id Int @id @default(autoincrement())
+  list_id Int
+  list tb_list @relation(fields: [list_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  deleted_at DateTime?
+}
+
+model tb_played_games {
+  id Int @id @default(autoincrement())
+  platinum Boolean?
+  achievements String @db.Text
+  status type_game_status
+  game_id Int
+  user_id Int
+  user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  deleted_at DateTime?
+}
+
+model tb_tips {
+  id Int @id @default(autoincrement())
+  subject String @db.VarChar(100)
+  description String @db.Text
+  likes Int
+  dislikes Int
+  game_id Int
+  user_id Int
+  user tb_user @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  deleted_at DateTime?
 }
