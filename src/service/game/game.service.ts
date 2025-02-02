@@ -37,4 +37,36 @@ export class GameService {
       deleted_at: game.deleted_at,
     };
   }
+
+  async findGameById(gameId: number): Promise<GameDto> {
+    const game = await this.prisma.tb_played_games.findUnique({
+      where: { id: gameId },
+    });
+
+    if (!game) {
+      throw new NotFoundException(`Game com ID ${gameId} não encontrado`);
+    }
+
+    return game;
+  }
+
+  async findAllGames(): Promise<Array<GameDto>> {
+    const games = await this.prisma.tb_played_games.findMany();
+
+    if (!games) {
+      throw new NotFoundException('Nenhum jogo encontrado');
+    }
+
+    return games.map((game) => ({
+      id: game.id,
+      platinum: game.platinum,
+      achievements: game.achievements,
+      status: game.status,
+      game_id: game.game_id,
+      user_id: game.user_id,
+      created_at: game.created_at,
+      updated_at: game.updated_at,
+      deleted_at: game.deleted_at,
+    }));
+  }
 }
