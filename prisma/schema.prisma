@@ -101,7 +101,7 @@ model tb_game_list {
 
 model tb_played_games {
   id           Int              @id @default(autoincrement())
-  platinum     Boolean?
+  platinum     Boolean         @default(false)
   achievements String           @db.Text
   status       type_game_status
   game_id      Int
