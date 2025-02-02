@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Test, TestingModule } from '@nestjs/testing';
 import { RegisterService } from './register.service';
 import * as bcrypt from 'bcrypt';

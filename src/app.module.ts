@@ -7,14 +7,17 @@ import { ControllersService } from './register/controllers/controllers.service';
 import { RegisterService } from './controllers/register/register.service';
 import { PrismaService } from './service/prisma/prisma.service';
 import { LoggerMiddleware } from './middleware/logger/logger.middleware';
+import { LoginController } from './controllers/login/login.controller';
+import { LoginService } from './controllers/login/login.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, RegisterController],
+  controllers: [AppController, RegisterController, LoginController],
   providers: [
     AppService,
     ApiService,
     ControllersService,
+    LoginService,
     RegisterService,
     PrismaService,
   ],
