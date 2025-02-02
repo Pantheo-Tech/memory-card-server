@@ -7,15 +7,18 @@ import { ControllersService } from './register/controllers/controllers.service';
 import { RegisterService } from './controllers/register/register.service';
 import { PrismaService } from './service/prisma/prisma.service';
 import { LoggerMiddleware } from './middleware/logger/logger.middleware';
+import { GameController } from './controllers/game/game.controller';
+import { GameService } from './service/game/game.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, RegisterController],
+  controllers: [AppController, RegisterController, GameController],
   providers: [
     AppService,
     ApiService,
     ControllersService,
     RegisterService,
+    GameService,
     PrismaService,
   ],
 })
