@@ -37,6 +37,7 @@ model tb_user {
   cpf          String            @unique
   age          Int
   password     String
+  lostPassword  String?
   phones       tb_phone[]
   addresses    tb_address[]
   lists        tb_list[]
