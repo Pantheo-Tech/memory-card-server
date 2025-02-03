@@ -97,4 +97,20 @@ export class GameService {
 
     return game;
   }
+
+  async deleteGame(id: number): Promise<{ message: string }> {
+    const game = await this.prisma.tb_played_games.findUnique({
+      where: { id: id },
+    });
+
+    if (!game) {
+      throw new NotFoundException(`Jogo com ID ${id} não encontrado`);
+    }
+
+    await this.prisma.tb_played_games.delete({
+      where: { id: id },
+    });
+
+    return { message: `Jogo com ID ${id} deletado com sucesso` };
+  }
 }
