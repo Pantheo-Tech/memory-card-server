@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegisterGameDto } from 'src/DTO/register.game.dto';
-import { GameDto } from 'src/DTO/game.dto';
+import { GameDto } from 'src/DTO/get.game.dto';
+import { UpdateGameDto } from 'src/DTO/update.game.dto';
 
 @Injectable()
 export class GameService {
@@ -68,5 +69,32 @@ export class GameService {
       updated_at: game.updated_at,
       deleted_at: game.deleted_at,
     }));
+  }
+
+  async updateGame(id: number, dto: UpdateGameDto): Promise<GameDto> {
+    const { user_id } = dto;
+
+    const user = await this.prisma.tb_user.findUnique({
+      where: { id: user_id },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`Usuário com ID ${user_id} não encontrado`);
+    }
+
+    const existingGame = await this.prisma.tb_played_games.findUnique({
+      where: { id: id },
+    });
+
+    if (!existingGame) {
+      throw new NotFoundException(`Jogo com ID ${id} não encontrado`);
+    }
+
+    const game = await this.prisma.tb_played_games.update({
+      where: { id: id },
+      data: dto,
+    });
+
+    return game;
   }
 }

@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { GameDto } from 'src/DTO/get.game.dto';
 import { RegisterGameDto } from 'src/DTO/register.game.dto';
+import { UpdateGameDto } from 'src/DTO/update.game.dto';
 import { GameService } from 'src/service/game/game.service';
 
 @Controller('game')
@@ -21,5 +22,14 @@ export class GameController {
   @Get()
   async getAll(): Promise<Array<GameDto>> {
     return this.gameService.findAllGames();
+  }
+
+  @Put(':id')
+  async updateGame(
+    @Param('id') gameId: string,
+    @Body() updateGameDto: UpdateGameDto,
+  ): Promise<GameDto> {
+    const id = +gameId;
+    return this.gameService.updateGame(id, updateGameDto);
   }
 }
