@@ -7,7 +7,6 @@ describe('RegisterController', () => {
   let registerController: RegisterController;
   let registerService: RegisterService;
 
-  // Mock do serviço de registro
   const mockRegisterService = {
     registerUser: jest.fn(),
   };

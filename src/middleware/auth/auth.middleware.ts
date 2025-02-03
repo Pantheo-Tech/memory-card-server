@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   constructor(private prisma: PrismaService) {}
-  use(req: Request, res: Response, next: NextFunction) {
+  async use(req: Request, res: Response, next: NextFunction) {
     const token = req.headers['authorization']?.split(' ')[1];
     try {
       if (!token) {
@@ -18,7 +18,7 @@ export class AuthMiddleware implements NestMiddleware {
         throw new Error();
       }
 
-      const findUser = this.prisma.tb_user.findUnique({
+      const findUser = await this.prisma.tb_user.findUnique({
         where: {
           id: decoded.id,
         },
@@ -29,11 +29,11 @@ export class AuthMiddleware implements NestMiddleware {
       }
 
       res.status(200).json({ auth: true });
+      next();
     } catch (error) {
       console.error(error);
 
       res.status(401).json({ auth: false });
     }
-    next();
   }
 }

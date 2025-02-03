@@ -17,7 +17,7 @@ describe('LoginController', () => {
         {
           provide: LoginService,
           useValue: {
-            loginUser: jest.fn(), // Mock do serviço de login
+            loginUser: jest.fn(),
           },
         },
       ],
@@ -36,7 +36,9 @@ describe('LoginController', () => {
 
     jest
       .spyOn(loginService, 'loginUser')
-      .mockRejectedValue(new BadRequestException('O Email e Senha não podem ser vazios.'));
+      .mockRejectedValue(
+        new BadRequestException('O Email e Senha não podem ser vazios.'),
+      );
 
     await expect(loginController.login(loginDto)).rejects.toThrow(
       new BadRequestException('O Email e Senha não podem ser vazios.'),
@@ -56,7 +58,10 @@ describe('LoginController', () => {
   });
 
   it('deve lançar erro se a senha estiver incorreta', async () => {
-    const loginDto: LoginDto = { email: 'joao@email.com', password: 'wrongpass' };
+    const loginDto: LoginDto = {
+      email: 'joao@email.com',
+      password: 'wrongpass',
+    };
 
     jest
       .spyOn(loginService, 'loginUser')
