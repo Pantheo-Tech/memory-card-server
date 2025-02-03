@@ -47,6 +47,7 @@ export class LoginService {
     delete userData.type;
     delete userData.created_at;
     delete userData.updated_at;
+    delete userData.deleted_at;
 
     const token = jwt.sign(
       { id: user.id },

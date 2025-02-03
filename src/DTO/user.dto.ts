@@ -10,6 +10,7 @@ export class UserDto {
   password?: string | null;
   lostPassword?: string | null;
   type?: type_user;
-  created_at?: Date;
-  updated_at?: Date;
+  created_at?: Date | null;
+  updated_at?: Date | null;
+  deleted_at?: Date | null;
 }
