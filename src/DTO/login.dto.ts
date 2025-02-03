@@ -17,4 +17,5 @@ export class LoginDto {
 export class DataDto {
   id: number;
   name: string;
+  token: string;
 }

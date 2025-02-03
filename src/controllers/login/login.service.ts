@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable, ConflictException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  ConflictException,
+} from '@nestjs/common';
 import { DataDto, LoginDto } from '../../DTO/login.dto';
 import { PrismaService } from '../../service/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import { UserDto } from 'src/DTO/user.dto';
 
 @Injectable()
 export class LoginService {
@@ -12,24 +18,45 @@ export class LoginService {
   async loginUser(dto: LoginDto): Promise<DataDto> {
     const { email, password } = dto;
 
-    if (!password && !email) {
-      throw new BadRequestException('O Email e Senha não podem ser vazios.');
+    if (!email) {
+      throw new BadRequestException('O email não pode ser vazio.');
     }
 
-    const userByEmail = await this.prisma.tb_user.findUnique({
+    if (!password) {
+      throw new BadRequestException('A senha não pode ser vazia.');
+    }
+
+    const user = await this.prisma.tb_user.findUnique({
       where: { email },
-      select: { id: true, name: true, password: true },
     });
 
-    const decryptedPassword = await bcrypt.compare(password, userByEmail?.password ?? 'Senha Incorreta');
+    if (!user) {
+      throw new ConflictException('Email Incorreto');
+    }
 
-    if (!decryptedPassword) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
       throw new ConflictException('Senha Incorreta');
     }
 
+    const userData: UserDto = user;
+
+    delete userData.password;
+    delete userData.lostPassword;
+    delete userData.type;
+    delete userData.created_at;
+    delete userData.updated_at;
+
+    const token = jwt.sign(
+      { id: user.id },
+      process.env.JWT_SECRET || 'defaultSecret',
+      { expiresIn: '1h' },
+    );
+
     return {
-      id: userByEmail?.id ?? 121313,
-      name: userByEmail?.name ?? 'Nome Incorreto',
+      ...userData,
+      token,
     };
   }
 }
