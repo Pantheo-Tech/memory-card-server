@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { GameDto } from 'src/DTO/game.dto';
+import { GameDto } from 'src/DTO/get.game.dto';
 import { RegisterGameDto } from 'src/DTO/register.game.dto';
 import { GameService } from 'src/service/game/game.service';
 
