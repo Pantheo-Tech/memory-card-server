@@ -2,7 +2,7 @@ import { type_game_status } from '@prisma/client';
 
 export class GameDto {
   id: number;
-  platinum: boolean;
+  platinum: boolean | null;
   achievements: string;
   status: type_game_status;
   game_id: number;

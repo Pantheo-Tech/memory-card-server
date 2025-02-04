@@ -31,13 +31,13 @@ export class LoginService {
     });
 
     if (!user) {
-      throw new ConflictException('Email Incorreto');
+      throw new ConflictException('Email e/ou Senha Incorreto');
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new ConflictException('Senha Incorreta');
+      throw new ConflictException('Email e/ou Senha Incorreto');
     }
 
     const userData: UserDto = user;
