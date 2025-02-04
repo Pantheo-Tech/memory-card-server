@@ -7,7 +7,10 @@ export class UserDto {
   email: string;
   cpf: string;
   age: number;
-  type: type_user;
-  created_at: Date;
-  updated_at: Date;
+  password?: string | null;
+  lostPassword?: string | null;
+  type?: type_user;
+  created_at?: Date | null;
+  updated_at?: Date | null;
+  deleted_at?: Date | null;
 }

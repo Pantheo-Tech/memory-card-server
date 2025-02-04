@@ -9,14 +9,17 @@ import { PrismaService } from './service/prisma/prisma.service';
 import { LoggerMiddleware } from './middleware/logger/logger.middleware';
 import { GameController } from './controllers/game/game.controller';
 import { GameService } from './service/game/game.service';
+import { LoginController } from './controllers/login/login.controller';
+import { LoginService } from './controllers/login/login.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, RegisterController, GameController],
+  controllers: [AppController, RegisterController, LoginController],
   providers: [
     AppService,
     ApiService,
     ControllersService,
+    LoginService,
     RegisterService,
     GameService,
     PrismaService,
