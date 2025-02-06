@@ -16,6 +16,8 @@ import { HttpModule } from '@nestjs/axios';
 import { SchedulerService } from './service/scheduler/scheduler/scheduler.service';
 import { SyncController } from './controllers/sync/sync.controller';
 import { ScheduleModule } from '@nestjs/schedule';
+import { RawgController } from './controllers/rawg/rawg.controller';
+import { RawgService } from './controllers/rawg/rawg.service';
 
 @Module({
   imports: [ScheduleModule.forRoot(), HttpModule],
@@ -27,6 +29,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     GameController,
     SyncController,
     SyncController,
+    RawgController,
   ],
   providers: [
     AppService,
@@ -40,6 +43,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       useClass: AuthGuard,
     },
     SchedulerService,
+    RawgService,
   ],
 })
 export class AppModule implements NestModule {
