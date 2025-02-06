@@ -1,5 +1,11 @@
 // dtos/register.dto.ts
-import { IsEmail, IsNotEmpty, MinLength, IsEnum } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  MinLength,
+  IsEnum,
+  Matches,
+} from 'class-validator';
 import { type_user as TypeUserEnum } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -21,9 +27,12 @@ export class RegisterDto {
   @IsNotEmpty()
   cpf: string;
 
-  @ApiProperty({ example: 30 })
+  @ApiProperty({ example: '19/02/1983' })
   @IsNotEmpty()
-  age: number;
+  @Matches(/^\d{2}\/\d{2}\/\d{4}$/, {
+    message: 'A data de nascimento deve estar no formato DD/MM/YYYY',
+  })
+  birthday: string;
 
   @ApiProperty({ enum: TypeUserEnum, example: TypeUserEnum.user })
   @IsEnum(TypeUserEnum)

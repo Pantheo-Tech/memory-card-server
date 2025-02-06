@@ -12,15 +12,21 @@ import { LoginService } from './controllers/login/login.service';
 import { GameController } from './controllers/game/game.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth/auth.guard';
+import { HttpModule } from '@nestjs/axios';
+import { SchedulerService } from './service/scheduler/scheduler/scheduler.service';
+import { SyncController } from './controllers/sync/sync.controller';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
-  imports: [],
+  imports: [ScheduleModule.forRoot(), HttpModule],
 
   controllers: [
     AppController,
     RegisterController,
     LoginController,
     GameController,
+    SyncController,
+    SyncController,
   ],
   providers: [
     AppService,
@@ -33,6 +39,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
+    SchedulerService,
   ],
 })
 export class AppModule implements NestModule {
