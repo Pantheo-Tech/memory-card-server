@@ -52,7 +52,7 @@ export class LoginService {
     const token = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET || 'defaultSecret',
-      { expiresIn: '1h' },
+      { expiresIn: '1d' },
     );
 
     return {

@@ -1,8 +1,13 @@
 // @ts-check
 import eslint from '@eslint/js';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default tseslint.config(
   {
@@ -36,6 +41,6 @@ export default tseslint.config(
           "endOfLine": "auto"
         }
       ]
-      },
+    },
   },
 );
