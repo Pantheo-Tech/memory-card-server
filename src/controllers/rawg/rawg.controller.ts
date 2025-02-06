@@ -29,7 +29,7 @@ export class RawgController {
     return this.rawgService.getGames(page);
   }
 
-  @Get(':id')
+  @Get('/game/:id')
   @ApiOperation({ summary: 'Informação de um jogo pelo ID' })
   @ApiResponse({ status: 200, description: 'Jogo listado com sucesso' })
   @ApiResponse({ status: 400, description: 'Erro ao listar jogo' })
