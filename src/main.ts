@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import logger, { LOG_LEVEL } from './helper/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,7 +35,7 @@ async function bootstrap() {
   const port = process.env.PORT ?? 3000;
 
   await app.listen(port);
-  console.log(`🚀 API rodando em http://localhost:${port}`);
-  console.log(`🚀 SWAGGER rodando em http://localhost:${port}/api/docs`);
+  logger(LOG_LEVEL.LOG_INFO, `🚀 API rodando em http://localhost:${port}`);
+  logger(LOG_LEVEL.LOG_INFO, `🚀 SWAGGER rodando em http://localhost:${port}/api/docs`);
 }
 bootstrap();
