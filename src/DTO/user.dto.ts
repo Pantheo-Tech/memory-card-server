@@ -5,8 +5,8 @@ export class UserDto {
   id: number;
   name: string;
   email: string;
-  cpf: string;
-  age: number;
+  cpf?: string | null;
+  birthday: Date;
   password?: string | null;
   lostPassword?: string | null;
   type?: type_user;

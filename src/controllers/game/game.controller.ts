@@ -20,18 +20,18 @@ import { GameService } from 'src/service/game/game.service';
 
 @ApiTags('game')
 @ApiBearerAuth()
-@Controller('game')
+@Controller('user')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Post()
+  @Post('/game')
   @ApiOperation({ summary: 'Cadastrar um novo jogo' })
   @ApiResponse({ status: 201, description: 'Jogo cadastrado com sucesso' })
   async createGame(@Body() registerGameDto: RegisterGameDto): Promise<GameDto> {
     return this.gameService.createGame(registerGameDto);
   }
 
-  @Get(':id')
+  @Get('/game/:id')
   @ApiOperation({ summary: 'Buscar jogo por ID' })
   @ApiResponse({ status: 200, description: 'Jogo encontrado' })
   @ApiResponse({ status: 404, description: 'Jogo não encontrado' })
@@ -40,14 +40,14 @@ export class GameController {
     return this.gameService.findGameById(id);
   }
 
-  @Get()
+  @Get('/game')
   @ApiOperation({ summary: 'Buscar todos os jogos' })
   @ApiResponse({ status: 200, description: 'Jogos encontrados' })
   async getAll(): Promise<Array<GameDto>> {
     return this.gameService.findAllGames();
   }
 
-  @Put(':id')
+  @Put('/game/:id')
   @ApiOperation({ summary: 'Atualizar um jogo' })
   @ApiResponse({ status: 200, description: 'Jogo atualizado com sucesso' })
   @ApiResponse({ status: 404, description: 'Jogo não encontrado' })
@@ -59,7 +59,7 @@ export class GameController {
     return this.gameService.updateGame(id, updateGameDto);
   }
 
-  @Delete(':id')
+  @Delete('/game/:id')
   @ApiOperation({ summary: 'Deletar um jogo' })
   @ApiResponse({ status: 200, description: 'Jogo deletado com sucesso' })
   @ApiResponse({ status: 404, description: 'Jogo não encontrado' })
