@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
 import logger, { LOG_LEVEL } from './helper/logger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 

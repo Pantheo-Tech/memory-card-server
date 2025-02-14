@@ -18,12 +18,16 @@ import { SyncController } from './controllers/sync/sync.controller';
 import { ScheduleModule } from '@nestjs/schedule';
 import { RawgController } from './controllers/rawg/rawg.controller';
 import { RawgService } from './controllers/rawg/rawg.service';
+import { PasswordController } from './controllers/password/password.controller';
+import { PasswordService } from './controllers/password/password.service';
+import { PasswordModule } from './controllers/password/password.module';
 
 @Module({
-  imports: [ScheduleModule.forRoot(), HttpModule],
+  imports: [ScheduleModule.forRoot(), HttpModule, PasswordModule],
 
   controllers: [
     AppController,
+    PasswordController,
     RegisterController,
     LoginController,
     GameController,
@@ -38,6 +42,7 @@ import { RawgService } from './controllers/rawg/rawg.service';
     RegisterService,
     GameService,
     PrismaService,
+    PasswordService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
